@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"time"
 	"os"
@@ -58,9 +57,6 @@ func requestHandler(ctx *fasthttp.RequestCtx) {
 
 func makeRequest(ctx *fasthttp.RequestCtx, attempt int) *fasthttp.Response {
 	if attempt > retries {
-		resp := fasthttp.AcquireResponse()
-		resp.SetBody([]byte("Failed to connect to proxy. Try again"))
-		resp.SetStatusCode(500)
 
 		return resp
 	}
@@ -82,7 +78,9 @@ func makeRequest(ctx *fasthttp.RequestCtx, attempt int) *fasthttp.Response {
 
     if err != nil {
 		fasthttp.ReleaseResponse(resp)
-	        fmt.Println(err)
+	        resp := fasthttp.AcquireResponse()
+	    	resp.SetBody(string(err))
+		resp.SetStatusCode(500)
         return makeRequest(ctx, attempt + 1)
     } else {
 		return resp
