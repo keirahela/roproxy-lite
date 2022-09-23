@@ -80,7 +80,7 @@ func makeRequest(ctx *fasthttp.RequestCtx, attempt int) *fasthttp.Response {
 
 	err := client.Do(req, resp)
 	
-	fmt.Println(err)
+
 
     if err != nil {
 		fasthttp.ReleaseResponse(resp)
