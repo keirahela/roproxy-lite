@@ -74,13 +74,10 @@ func makeRequest(ctx *fasthttp.RequestCtx, attempt int) *fasthttp.Response {
 
     if err != nil {
 		fasthttp.ReleaseResponse(resp)
-        if attempt > retries {
 		resp := fasthttp.AcquireResponse()
-	    	resp.SetBody(err)
+	   	resp.SetBody(error(err))
 		resp.SetStatusCode(500)
 		return resp
-	}
-	    return
     } else {
 		return resp
 	}
