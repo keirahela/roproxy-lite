@@ -81,9 +81,11 @@ func makeRequest(ctx *fasthttp.RequestCtx, attempt int, err string) *fasthttp.Re
 
 	err := client.Do(req, resp)
 
+	err2 := string(err)
+
     if err != nil {
 		fasthttp.ReleaseResponse(resp)
-        return makeRequest(ctx, attempt + 1, err)
+        return makeRequest(ctx, attempt + 1, err2)
     } else {
 		return resp
 	}
