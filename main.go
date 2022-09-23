@@ -80,7 +80,7 @@ func makeRequest(ctx *fasthttp.RequestCtx, attempt int) *fasthttp.Response {
 		resp.SetStatusCode(500)
 		return resp
 	}
-	    
+	    return
     } else {
 		return resp
 	}
