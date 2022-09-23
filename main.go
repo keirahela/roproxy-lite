@@ -62,7 +62,7 @@ func makeRequest(ctx *fasthttp.RequestCtx, attempt int) *fasthttp.Response {
 	defer fasthttp.ReleaseRequest(req)
 	req.Header.SetMethod(string(ctx.Method()))
 	url := strings.SplitN(string(ctx.Request.Header.RequestURI())[1:], "/", 2)
-	req.SetRequestURI("https://roblox.com/" + url[0] + url[1])
+	req.SetRequestURI("https://roblox.com/" + url[0] + "/" + url[1])
 	fmt.Println(url[0])
 	fmt.Println(url[1])
 	req.SetBody(ctx.Request.Body())
