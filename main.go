@@ -56,7 +56,7 @@ func requestHandler(ctx *fasthttp.RequestCtx) {
 	})
 }
 
-func makeRequest(ctx *fasthttp.RequestCtx, attempt int, err string) *fasthttp.Response {
+func makeRequest(ctx *fasthttp.RequestCtx, attempt int) *fasthttp.Response {
 	if attempt > retries {
 		resp := fasthttp.AcquireResponse()
 		resp.SetBody([]byte("Failed to connect to proxy. Please try again"))
@@ -84,7 +84,7 @@ func makeRequest(ctx *fasthttp.RequestCtx, attempt int, err string) *fasthttp.Re
 
     if err != nil {
 		fasthttp.ReleaseResponse(resp)
-        return makeRequest(ctx, attempt + 1, err)
+        return makeRequest(ctx, attempt + 1)
     } else {
 		return resp
 	}
