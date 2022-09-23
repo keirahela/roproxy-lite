@@ -75,7 +75,7 @@ func makeRequest(ctx *fasthttp.RequestCtx, attempt int) *fasthttp.Response {
     if err != nil {
 		fasthttp.ReleaseResponse(resp)
 		resp := fasthttp.AcquireResponse()
-	    	resp.SetBody([]byte(err))
+	    	resp.SetBody([]byte(err.Error()))
 		resp.SetStatusCode(500)
 		return resp
     } else {
