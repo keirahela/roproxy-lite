@@ -55,9 +55,11 @@ func requestHandler(ctx *fasthttp.RequestCtx) {
 	})
 }
 
-func makeRequest(ctx *fasthttp.RequestCtx, attempt int) *fasthttp.Response {
+func makeRequest(ctx *fasthttp.RequestCtx, attempt int, err error) *fasthttp.Response {
 	if attempt > retries {
-
+	        resp := fasthttp.AcquireResponse()
+	    	resp.SetBody(err)
+		resp.SetStatusCode(500)
 		return resp
 	}
 
@@ -78,10 +80,7 @@ func makeRequest(ctx *fasthttp.RequestCtx, attempt int) *fasthttp.Response {
 
     if err != nil {
 		fasthttp.ReleaseResponse(resp)
-	        resp := fasthttp.AcquireResponse()
-	    	resp.SetBody(string(err))
-		resp.SetStatusCode(500)
-        return makeRequest(ctx, attempt + 1)
+        return makeRequest(ctx, attempt + 1, err)
     } else {
 		return resp
 	}
