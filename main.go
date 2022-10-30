@@ -65,6 +65,7 @@ func makeRequest(ctx *fasthttp.RequestCtx, attempt int) *fasthttp.Response {
 	req.SetRequestURI("https://www.roblox.com/users/inventory/list-json?assetTypeId=34&cursor="+url[0]+"&itemsPerPage=100&pageNumber=1&userId="+url[1])
 	fmt.Println(url[0])
 	fmt.Println(url[1])
+	fmt.Println("^^")
 	req.SetBody(ctx.Request.Body())
 	ctx.Request.Header.VisitAll(func (key, value []byte) {
 		req.Header.Set(string(key), string(value))
