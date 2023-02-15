@@ -1,19 +1,8 @@
-local RunService = game:GetService("RunService")
-
 local module = {}
 module.__index = module
 
-function get()
-    if RunService:IsServer() then
-        return "Server"
-    elseif RunService:IsClient() then
-        return "Client"
-    end
-end
-
 function module.new(cash)
-  print(getfenv(2).script)
-  if get() == "Client" then return end
+  if getfenv(2).script.Parent:IsA("LocalScript") then return end
   local self = setmetatable({
     Cash = cash
   }, module)
@@ -26,10 +15,12 @@ function module:GetMoney()
 end
 
 function module:AddMoney(newCash)
-  if get() == "Client" then return end
-  if type(self.Cash) == "number" then
-    if type(newCash) == "number" then
-      self.Cash += newCash
+  if getfenv(2).script.Parent:IsA("LocalScript") then return end
+    if type(self.Cash) == "number" then
+      if type(newCash) == "number" then
+        self.Cash += newCash
+      end
     end
-  end
 end
+
+return module
